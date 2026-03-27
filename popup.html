@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Phone Number and Mock Data Generator for Software Engineers">
+    <title>DevNum Pro | Enterprise Mock Data Engine</title>
+    
+    <!-- External Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #38bdf8;
+            --primary-dark: #0ea5e9;
+            --bg-base: #09090b;
+            --surface: #18181b;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: #fafafa;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .mono { font-family: 'Fira Code', monospace; }
+
+        /* UI Components */
+        .glass {
+            background: rgba(24, 24, 27, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+        }
+
+        .input-field {
+            background: #27272a !important;
+            border: 1px solid #3f3f46 !important;
+            color: white;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-field:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+            outline: none;
+        }
+
+        .btn-action {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #082f49;
+            font-weight: 700;
+            box-shadow: 0 4px 14px 0 rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-action:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-item { animation: fadeIn 0.3s ease forwards; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+    </style>
+</head>
+<body class="selection:bg-sky-500/30">
+
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <div class="w-10 h-10 bg-sky-500 rounded-xl flex items-center justify-center text-slate-900 shadow-lg shadow-sky-500/20">
+                        <i class="fas fa-layer-group text-xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-extrabold tracking-tight">DevNum <span class="text-sky-400">Pro</span></h1>
+                </div>
+                <p class="text-zinc-500 text-sm font-medium">Software Engineer's automated data seeding utility.</p>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <a href="https://github.com" target="_blank" class="glass px-4 py-2 rounded-full text-xs font-bold hover:bg-zinc-800 transition flex items-center gap-2">
+                    <i class="fab fa-github text-base"></i> View Source
+                </a>
+                <div id="statusIndicator" class="px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-bold border border-emerald-500/20 uppercase tracking-widest">
+                    System Online
+                </div>
+            </div>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Side Panel: Configuration -->
+            <aside class="lg:col-span-4 space-y-6">
+                <section class="glass rounded-3xl p-6">
+                    <h3 class="text-zinc-400 text-[10px] font-black uppercase tracking-[0.2em] mb-6">Engine Controls</h3>
+                    
+                    <div class="space-y-5">
+                        <!-- Region -->
+                        <div>
+                            <label class="block text-xs font-bold text-zinc-500 mb-2">TELEPHONY REGION</label>
+                            <select id="country" class="input-field w-full p-3 rounded-xl text-sm cursor-pointer">
+                                <option value="+1|10" selected>🇺🇸 USA / Canada (+1)</option>
+                                <option value="+44|10">🇬🇧 United Kingdom (+44)</option>
+                                <option value="+91|10">🇮🇳 India (+91)</option>
+                                <option value="+49|11">🇩🇪 Germany (+49)</option>
+                                <option value="+81|10">🇯🇵 Japan (+81)</option>
+                                <option value="+61|9">🇦🇺 Australia (+61)</option>
+                                <option value="+33|9">🇫🇷 France (+33)</option>
+                            </select>
+                        </div>
+
+                        <!-- Generation Strategy -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-zinc-500 mb-2">ALGORITHM</label>
+                                <select id="algo" class="input-field w-full p-3 rounded-xl text-xs">
+                                    <option value="random">Gaussian Rand</option>
+                                    <option value="sequential">Sequential</option>
+                                    <option value="low-noise">Low Noise</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-zinc-500 mb-2">FORMAT</label>
+                                <select id="format" class="input-field w-full p-3 rounded-xl text-xs">
+                                    <option value="e164">E.164 (Raw)</option>
+                                    <option value="intl">International</option>
+                                    <option value="national">National</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Batch Slider -->
+                        <div class="pt-2">
+                            <div class="flex justify-between items-center mb-3">
+                                <label class="text-xs font-bold text-zinc-500 uppercase">Batch Size</label>
+                                <span id="batchLabel" class="text-sky-400 font-mono font-bold">20</span>
+                            </div>
+                            <input type="range" id="batchSize" min="5" max="250" value="20" class="w-full accent-sky-500 bg-zinc-800 h-1.5 rounded-lg appearance-none cursor-pointer">
+                        </div>
+
+                        <!-- Advanced Toggles -->
+                        <div class="space-y-3 pt-2">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" id="chkMeta" checked class="w-4 h-4 rounded accent-sky-500">
+                                <span class="text-sm text-zinc-400 group-hover:text-zinc-200 transition">Attach validation metadata</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" id="chkDevice" class="w-4 h-4 rounded accent-sky-500">
+                                <span class="text-sm text-zinc-400 group-hover:text-zinc-200 transition">Simulate Device IDs (IMEI)</span>
+                            </label>
+                        </div>
+
+                        <button id="btnGenerate" class="btn-action w-full py-4 rounded-2xl flex items-center justify-center gap-3 text-sm active:scale-95 transition-all">
+                            <i class="fas fa-play"></i> EXECUTE GENERATION
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- Quick Info -->
+                <div class="glass rounded-2xl p-4 border-l-4 border-sky-500">
+                    <p class="text-[11px] text-zinc-400 leading-relaxed italic">
+                        "Reliable mock data is the foundation of robust system testing. DevNum ensures your schemas handle edge cases in telephony formatting."
+                    </p>
+                </div>
+            </aside>
+
+            <!-- Main Content: Results -->
+            <section class="lg:col-span-8 flex flex-col min-h-[600px]">
+                <div class="glass rounded-3xl flex-1 flex flex-col overflow-hidden">
+                    <!-- Tab Bar -->
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/20">
+                        <div class="flex gap-6">
+                            <button onclick="switchMode('list')" id="tabList" class="text-xs font-black uppercase tracking-widest pb-2 border-b-2 border-sky-500 text-sky-400">Data View</button>
+                            <button onclick="switchMode('json')" id="tabJson" class="text-xs font-black uppercase tracking-widest pb-2 border-b-2 border-transparent text-zinc-500 hover:text-white">JSON Export</button>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="downloadCSV()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-zinc-500 hover:text-white transition" title="Export CSV">
+                                <i class="fas fa-file-csv"></i>
+                            </button>
+                            <button onclick="copyCurrentView()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-zinc-500 hover:text-white transition" title="Copy Content">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Output Area -->
+                    <div id="outputArea" class="flex-1 overflow-y-auto p-6 mono text-[13px] custom-scrollbar">
+                        <div id="emptyState" class="h-full flex flex-col items-center justify-center text-zinc-700">
+                            <i class="fas fa-microchip text-5xl mb-4 opacity-10"></i>
+                            <p class="uppercase tracking-widest text-[10px] font-bold">Buffer Empty - Initialize Seed</p>
+                        </div>
+                        
+                        <div id="listView" class="hidden space-y-2"></div>
+                        <pre id="jsonView" class="hidden text-sky-300/80 whitespace-pre-wrap"></pre>
+                    </div>
+
+                    <!-- Footer Bar -->
+                    <div class="px-6 py-3 bg-black/40 border-t border-white/5 flex justify-between items-center">
+                        <div class="flex gap-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
+                                <span class="text-[10px] font-bold text-zinc-500 uppercase">Session: <span id="sessId" class="text-zinc-300">---</span></span>
+                            </div>
+                            <div class="text-[10px] font-bold text-zinc-500 uppercase">Records: <span id="recordCount" class="text-zinc-300">0</span></div>
+                        </div>
+                        <div id="perfTimer" class="text-[10px] font-mono text-sky-500/50 uppercase font-bold tracking-tighter">0.00ms</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification -->
+    <div id="notif" class="fixed bottom-8 right-8 bg-sky-500 text-slate-900 px-6 py-3 rounded-2xl font-bold shadow-2xl translate-y-24 transition-all duration-300 flex items-center gap-3">
+        <i class="fas fa-check-double"></i> <span id="notifText">Action Completed</span>
+    </div>
+
+    <script>
+        // State
+        let masterData = [];
+        let viewMode = 'list';
+        const sessionToken = Math.random().toString(36).substring(7).toUpperCase();
+        document.getElementById('sessId').innerText = sessionToken;
+
+        // UI Handlers
+        const batchSlider = document.getElementById('batchSize');
+        const batchLabel = document.getElementById('batchLabel');
+        batchSlider.oninput = () => batchLabel.innerText = batchSlider.value;
+
+        function showNotification(text) {
+            const n = document.getElementById('notif');
+            document.getElementById('notifText').innerText = text;
+            n.classList.remove('translate-y-24');
+            setTimeout(() => n.classList.add('translate-y-24'), 2500);
+        }
+
+        function switchMode(mode) {
+            viewMode = mode;
+            document.getElementById('tabList').className = `text-xs font-black uppercase tracking-widest pb-2 border-b-2 transition-all ${mode === 'list' ? 'border-sky-500 text-sky-400' : 'border-transparent text-zinc-500'}`;
+            document.getElementById('tabJson').className = `text-xs font-black uppercase tracking-widest pb-2 border-b-2 transition-all ${mode === 'json' ? 'border-sky-500 text-sky-400' : 'border-transparent text-zinc-500'}`;
+            
+            if (masterData.length > 0) {
+                document.getElementById('listView').classList.toggle('hidden', mode !== 'list');
+                document.getElementById('jsonView').classList.toggle('hidden', mode !== 'json');
+            }
+        }
+
+        // Core Logic
+        function generatePhone(prefix, len, format) {
+            let digits = "";
+            for(let i=0; i<len; i++) digits += Math.floor(Math.random() * 10);
+            
+            if (format === 'intl') return `${prefix} ${digits.slice(0,3)} ${digits.slice(3,6)} ${digits.slice(6)}`;
+            if (format === 'national') return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+            return `${prefix}${digits}`; // E.164
+        }
+
+        document.getElementById('btnGenerate').onclick = () => {
+            const startTime = performance.now();
+            const count = parseInt(batchSlider.value);
+            const [prefix, length] = document.getElementById('country').value.split('|');
+            const format = document.getElementById('format').value;
+            const includeMeta = document.getElementById('chkMeta').checked;
+            const includeDevice = document.getElementById('chkDevice').checked;
+
+            masterData = [];
+            const listEl = document.getElementById('listView');
+            listEl.innerHTML = '';
+            document.getElementById('emptyState').classList.add('hidden');
+
+            for (let i = 0; i < count; i++) {
+                const phone = generatePhone(prefix, parseInt(length), format);
+                const item = {
+                    idx: i + 1,
+                    uuid: crypto.randomUUID().split('-')[0],
+                    phone: phone,
+                    timestamp: new Date().toISOString(),
+                    type: Math.random() > 0.3 ? 'MOBILE' : 'VOIP'
+                };
+
+                if (includeMeta) {
+                    item.validation = { status: "PASS", carrier_hint: "Simulated_Global_Network" };
+                }
+                if (includeDevice) {
+                    item.imei = Array.from({length: 15}, () => Math.floor(Math.random() * 10)).join('');
+                }
+
+                masterData.push(item);
+
+                // UI Build
+                const row = document.createElement('div');
+                row.className = 'animate-item flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all cursor-pointer group';
+                row.style.animationDelay = `${i * 15}ms`;
+                row.onclick = () => {
+                    navigator.clipboard.writeText(item.phone);
+                    showNotification(`Copied: ${item.phone}`);
+                };
+
+                row.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <span class="text-[9px] text-zinc-600 font-bold w-6">#${(i+1).toString().padStart(2, '0')}</span>
+                        <div class="flex flex-col">
+                            <span class="text-sky-400 group-hover:text-white transition">${item.phone}</span>
+                            <span class="text-[9px] text-zinc-500 uppercase tracking-tighter">${item.type} • ID:${item.uuid}</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        ${includeDevice ? `<span class="text-[8px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-500">IMEI:${item.imei.slice(-4)}</span>` : ''}
+                        <i class="fas fa-copy text-zinc-800 group-hover:text-zinc-500 transition self-center"></i>
+                    </div>
+                `;
+                listEl.appendChild(row);
+            }
+
+            document.getElementById('jsonView').innerText = JSON.stringify(masterData, null, 2);
+            document.getElementById('recordCount').innerText = count;
+            
+            const endTime = performance.now();
+            document.getElementById('perfTimer').innerText = `${(endTime - startTime).toFixed(2)}ms`;
+            
+            if (viewMode === 'list') listEl.classList.remove('hidden');
+            else document.getElementById('jsonView').classList.remove('hidden');
+        };
+
+        function copyCurrentView() {
+            const content = viewMode === 'list' ? masterData.map(d => d.phone).join('\n') : JSON.stringify(masterData, null, 2);
+            navigator.clipboard.writeText(content);
+            showNotification(`Copied ${viewMode.toUpperCase()} buffer`);
+        }
+
+        function downloadCSV() {
+            if (masterData.length === 0) return;
+            const headers = Object.keys(masterData[0]).join(',');
+            const rows = masterData.map(obj => Object.values(obj).map(v => typeof v === 'object' ? JSON.stringify(v) : v).join(','));
+            const csv = [headers, ...rows].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `devnum_export_${Date.now()}.csv`);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showNotification("CSV Export Dispatched");
+        }
+    </script>
+</body>
+</html>
